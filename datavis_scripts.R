@@ -8,7 +8,7 @@ library(plot3D)
 
 #CHANGE TO YOUR DIRECTORY
 BASE            <- "C:\\Users\\Andrew\\Documents\\Github\\vast2018\\"
-CSV_PATH        <- paste(BASE, "metadata\\AllBirds_Year.csv", sep="")
+CSV_PATH        <- paste(BASE, "metadata\\AllBirds_Hour.csv", sep="")
 TEST_BIRDS_PATH <- paste(BASE, "Test Birds Location.csv",     sep="")
 IMAGE_PATH      <- paste(BASE, "Lekagul Roadways 2018.png",   sep="")
 
@@ -91,6 +91,46 @@ generate_maps <- function(out_dir)
   }
 }
 
+#Generates a series of histograms.
+#
+#column     - column to use for the histogram
+#collection - collection of objects to filter with (for example time or species names)
+#filter     - function taking a dataframe and element from the collection to filter table before histogram is made
+#breaks     - specifies where the histogram columns go
+#ylim       - vector of 2 numbers for the upper and lower bound for the y-axis
+#out_dir    - Directory to place images
+generate_histograms <- function(dtable, column, collection, filter, breaks, ylim, out_dir)
+{
+  for(element in collection)
+  {
+     filtered <- filter(dtable, element)
+     title    <- paste("Histogram of", column, "for", element)
+     out_file <- paste(out_dir, "Hist_", column, "_", element, ".png", sep="")
+
+     #freq_table <- table(filtered[["Year"]])
+     #write.csv(freq_table, out_file, row.names = FALSE)
+     
+     png(out_file)
+     hist(filtered[[column]], main=title, xlab=column, ylim=c(0,60), col="lightblue", breaks=breaks)
+     dev.off()
+  }
+}
+
+filter1 <- function(dtable, specie)
+{
+  dtable <- dtable[dtable[["English_name"]] == specie,]
+  dtable[dtable[["Year"]] != 2018,]
+}
+
+
+filter2 <- function(dtable, specie)
+{
+  dtable <- dtable[dtable[["English_name"]] == specie,]
+}
+
+
+#generate_histograms(dtable, "Year", ALL_SPECIES, filter1, 1983:2017, c(0,60), paste(BASE, "histograms\\", sep=""))
+generate_histograms(dtable, "Hour", ALL_SPECIES, filter2, 0:24, c(0,100), paste(BASE, "histograms3\\", sep=""))
 #generate_maps(paste(BASE, "Hist_Months\\", sep=""))
 
 #vocal_freq <- table(dtable[["Vocalization_type"]])[c(3, 6, 1, 4, 2, 5)]
