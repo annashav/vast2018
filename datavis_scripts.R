@@ -8,7 +8,7 @@ library(plot3D)
 
 #CHANGE TO YOUR DIRECTORY
 BASE            <- "C:\\Users\\Andrew\\Documents\\Github\\vast2018\\"
-CSV_PATH        <- paste(BASE, "metadata\\AllBirds_Vocalization.csv", sep="")
+CSV_PATH        <- paste(BASE, "metadata\\AllBirds_clean5.csv", sep="")
 TEST_BIRDS_PATH <- paste(BASE, "Test Birds Location.csv",     sep="")
 IMAGE_PATH      <- paste(BASE, "Lekagul Roadways 2018.png",   sep="")
 
@@ -17,7 +17,7 @@ Y_MAX <- 200
 DUMP  <- c(x=148, y=159) #Location of alleged dump site.
 ALL_QUALITIES  <- c("A", "B", "C", "D", "E", "no score")
 QUALITY_COLORS <- c("Purple", "Blue", "Green", "Yellow", "Orange", "Black")
-
+names(QUALITY_COLORS) <- ALL_QUALITIES
 ALL_SPECIES    <- c(
  "Bent-beak Riffraff", "Blue-collared Zipper",    "Bombadil",
  "Broad-winged Jojo",  "Canadian Cootamum",       "Carries Champagne Pipit",
@@ -124,7 +124,7 @@ generate_histograms <- function(dtable, column, collection, filter, breaks, ylim
   }
 }
 
-plot_xy(dtable, "All Species Colored by Recording Quality", QUALITY_COLORS[dtable[["Quality"]]])
+#plot_xy(dtable, "All Species Colored by Recording Quality", QUALITY_COLORS[dtable[["Quality"]]])
 #plot_xy(dtable, "All Species Colored by Call Type", VOCALIZATION_COLORS[dtable[["Vocalization_type"]]])
 #Generate histogram of all data
 #hist(dtable[["Year"]], main="Histogram of Year of Recording", xlab="Year", col="lightblue", breaks=1983:2018)
@@ -133,7 +133,7 @@ plot_xy(dtable, "All Species Colored by Recording Quality", QUALITY_COLORS[dtabl
 
 #Histogram of year, number of recordings from before April
 #beforeMarch <- dtable[dtable[["Month"]] <= 3, ]
-#hist(beforeMarch[["Year"]], main="Histogram of Years from Jan to Mar", xlab="Year", ylim=c(0,60), col="lightblue", breaks=1983:2018)
+#hist(beforeMarch[["Year"]], main="Histogram of Year in Months of Jan to Mar", xlab="Year", ylim=c(0,60), col="lightblue", breaks=1983:2019, right=FALSE)
 #table[beforeMarch[["Year"]])
 
 filter1 <- function(dtable, specie)
@@ -145,16 +145,26 @@ filter2 <- function(dtable, specie)
 {
   dtable <- dtable[dtable[["English_name"]] == specie,]
 }
+
+#hist(dtable[["Year"]], breaks=1983:2019, right=FALSE, col="lightblue", xlab="Year", main="Histogram of Year")
+#hist(dtable[["Hour"]], breaks=0:24, right=FALSE, col="lightblue", xlab="Hour", main="Histogram of Hour")
+
 #Generate histogram of all species based on filter.
 #generate_histograms(dtable, "Year", ALL_SPECIES, filter1, 1983:2017, c(0,60), paste(BASE, "histograms\\", sep=""))
 #generate_histograms(dtable, "Hour", ALL_SPECIES, filter2, 0:24, c(0,100), paste(BASE, "histograms3\\", sep=""))
 
 #Generate histogramm of the vocalization types
-vocal_freq <- table(dtable[["Vocalization_type"]])[c(3, 6, 1, 4, 2, 5)]
-barplot(vocal_freq, col=VOCALIZATION_COLORS[vocal_freq], main="Histogram of Vocalization Typ)e", ylab="Frequency", xlab="Vocalization Type")
+#vocal_freq <- table(dtable[["Vocalization_type"]])[c(3, 6, 1, 4, 2, 5)]
+#barplot(vocal_freq, col=VOCALIZATION_COLORS[names(vocal_freq)], main="Histogram of Vocalization Type", ylab="Frequency", xlab="Vocalization Type")
+
+#qual_freq <- table(dtable[["Quality"]])
+#barplot(qual_freq, col=QUALITY_COLORS[names(qual_freq)], main="Histogram of Quality", ylab="Frequency", xlab="Quality")
 
 #hour      <- as.numeric(dtable[["Hour"]])
-#frequency <- table(dtable[["Year"]], dtable[["Time"]])
+#frequency <- table(dtable[["X"]], as.numeric(dtable[["Y"]]))
 #hist(hour, breaks=seq(0,23,l=25), main="Histogram of Hour of Day", xlab="Month", col="lightblue")
 #hist3D(z=frequency, ybreaks=seq(0,23,l=25), xbreaks=seq(1983, 2018, l=36), border="Black", main="Histogram of Hour of Day", xlab="Year", ylab="Hour", zlab="Frequency")
-#image2D(z=frequency, ybreaks=seq(0,23,l=25), border="Black", main="Histogram of Hour of Day", xlab="Year", ylab="Hour")
+#image2D(z=frequency, border="Black", main="Histogram of Hour of Day", xlab="Year", ylab="Hour")
+
+#freq_month_bird <- table(dtable[["Vocalization_type"]], dtable[["Year"]])
+#write.csv(freq_month_bird, paste(BASE, "metadata\\freq_vocal_bird.csv", sep="")) 
