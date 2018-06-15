@@ -8,13 +8,15 @@ library(plot3D)
 
 #CHANGE TO YOUR DIRECTORY
 BASE            <- "C:\\Users\\Andrew\\Documents\\Github\\vast2018\\"
-CSV_PATH        <- paste(BASE, "metadata\\AllBirds_clean5.csv", sep="")
+CSV_PATH        <- paste(BASE, "metadata\\AllBirds_quad.csv", sep="")
 TEST_BIRDS_PATH <- paste(BASE, "Test Birds Location.csv",     sep="")
-IMAGE_PATH      <- paste(BASE, "Lekagul Roadways 2018.png",   sep="")
+IMAGE_PATH      <- paste(BASE, "Lekagul Roadways 2018Q.png",   sep="")
+STATS_PATH      <- paste(BASE, "metadata\\stats_xy.csv", sep="")
 
 X_MAX <- 200
 Y_MAX <- 200
-DUMP  <- c(x=148, y=159) #Location of alleged dump site.
+DUMP  <- c(x=100, y=100)
+#DUMP  <- c(x=148, y=159) #Location of alleged dump site.
 ALL_QUALITIES  <- c("A", "B", "C", "D", "E", "no score")
 QUALITY_COLORS <- c("Purple", "Blue", "Green", "Yellow", "Orange", "Black")
 names(QUALITY_COLORS) <- ALL_QUALITIES
@@ -44,9 +46,14 @@ ALL_VOCALIZATIONS <- c(
 VOCALIZATION_COLORS <- c(
   "purple", "orange", "blue", "green", "black", "red"
 )
+QUADRANT_COLORS <- c(
+  "red", "blue", "yellow", "green"
+)
+names(QUADRANT_COLORS) = c("1", "2", "3", "4")
 names(VOCALIZATION_COLORS) <- ALL_VOCALIZATIONS
 
 dtable <- read.csv(CSV_PATH, header=TRUE)
+stats_table <- read.csv(STATS_PATH, header=TRUE)
 
 #Plot the locations of the bird call recordings.
 #
@@ -67,7 +74,7 @@ plot_xy <- function(dtable, title, colors, plot_bg=TRUE, point_style=19, dump_st
   {
     roadways                   <- readPNG(IMAGE_PATH)
     raster                     <- as.raster(roadways[,,1:3])
-    raster[roadways[,,4] == 0] <- "white"
+    #raster[roadways[,,4] == 0] <- "white"
     rasterImage(raster, 0, 0, X_MAX,Y_MAX)
   }
 
@@ -124,6 +131,8 @@ generate_histograms <- function(dtable, column, collection, filter, breaks, ylim
   }
 }
 
+
+plot_xy(dtable, "All Species Colored by Quadrant", QUADRANT_COLORS[dtable[["Quadrant"]]])
 #plot_xy(dtable, "All Species Colored by Recording Quality", QUALITY_COLORS[dtable[["Quality"]]])
 #plot_xy(dtable, "All Species Colored by Call Type", VOCALIZATION_COLORS[dtable[["Vocalization_type"]]])
 #Generate histogram of all data
@@ -168,3 +177,23 @@ filter2 <- function(dtable, specie)
 
 #freq_month_bird <- table(dtable[["Vocalization_type"]], dtable[["Year"]])
 #write.csv(freq_month_bird, paste(BASE, "metadata\\freq_vocal_bird.csv", sep="")) 
+
+mean_x <- numeric()
+mean_y <- numeric()
+sd_x   <- numeric()
+sd_y   <- numeric()
+
+for(year in 1983:2018)
+{
+  x = as.numeric(dtable[as.numeric(dtable[["Year"]]) == year,][["X"]])
+  y = as.numeric(dtable[as.numeric(dtable[["Year"]]) == year,][["Y"]])
+  
+  mean_x <- c(mean_x, mean(x))
+  mean_y <- c(mean_y, mean(y))
+  sd_x   <- c(sd_x,   sd(x))
+  sd_y   <- c(sd_y,   sd(y))
+}
+
+#stats_xy <- data.frame(list(year=1983:2018, meanx=mean_x, meany=mean_y, sdx=sd_x, sdy=sd_y))
+#write.csv(stats_xy, paste(BASE, "metadata\\stats_xy.csv", sep=""))
+

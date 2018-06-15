@@ -5,8 +5,8 @@ Data cleaning script
 import pandas as pd
 import re
 
-FILE_PATH = 'AllBirds_Hour.csv'
-OUTPUT_PATH = 'AllBirds_Hour_rename.csv'
+FILE_PATH = 'AllBirds_Year.csv'
+OUTPUT_PATH = 'AllBirds_quad.csv'
 
 
 def reformat_dates(dataframe): #month/day/year #year/month/day
@@ -77,11 +77,32 @@ def rename(dataframe):
         names.append(name)
     names = pd.Series(names, index=dataframe.index)
     dataframe["English_name"] = names
+
+def quad_column(dataframe):
+    x_edge = 100
+    y_edge = 100
+    quad = []
+
+    for index in dataframe.index:
+        x = dataframe.at[index, "X"]
+        y = int(dataframe.at[index, "Y"].replace("?", ""))
+
+        if(x >= x_edge and y > y_edge):
+            quad.append(1)
+        elif(x < x_edge and y >= y_edge):
+            quad.append(2)
+        elif(x <= x_edge and y < y_edge):
+            quad.append(3)
+        elif(x > x_edge and y <= y_edge):
+            quad.append(4)
+    dataframe["Quadrant"] = quad
         
 
 dataframe = pd.read_csv(FILE_PATH)
 dataframe.set_index('File_ID', inplace=True)
-rename(dataframe)
+    
+#rename(dataframe)
+quad_column(dataframe)
 dataframe.to_csv(OUTPUT_PATH)
 #ampm = am_pm_column(dataframe)
 #dataframe["AM_PM"] = ampm

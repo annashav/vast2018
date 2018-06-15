@@ -13,9 +13,9 @@ SPECIES = [
 ]
 
 VOCALS = ["Call", "Song", "Call and Song", "Bill-Snapping", "Drumming", "Scold"]
-FILE_PATH = 'metadata\\freq_vocal_year.csv'
+FILE_PATH = 'metadata\\stats_xy.csv'
 dataframe = pd.read_csv(FILE_PATH)
-dataframe.set_index('Vocalization_type', inplace=True)
+#dataframe.set_index('Vocalization_type', inplace=True)
 
 """
 y, x = dataframe["Year"], dataframe["Month"].astype("int64")
@@ -31,6 +31,21 @@ plt.suptitle("Histogram of Year and Month of Recordings", y=0.95)
 plt.show()
 """
 
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+ax.scatter(dataframe["mean_x"], dataframe["mean_y"], dataframe["year"])
+
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Year')
+ax.set_title("Average Position Over Time")
+
+plt.xlim(0, 200)
+plt.ylim(0, 200)
+plt.show()
+
+"""
 freq = dataframe.values#np.random.rand(19, 35)
 
 fig, ax = plt.subplots()
@@ -55,4 +70,5 @@ plt.colorbar(im, ax=ax)
 
 fig.tight_layout()
 plt.show()
+"""
 
