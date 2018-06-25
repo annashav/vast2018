@@ -8,15 +8,15 @@ library(plot3D)
 
 #CHANGE TO YOUR DIRECTORY
 BASE            <- "C:\\Users\\Andrew\\Documents\\Github\\vast2018\\"
-CSV_PATH        <- paste(BASE, "metadata\\AllBirds_quad.csv", sep="")
+CSV_PATH        <- paste(BASE, "metadata\\AllBirds_Year.csv", sep="")
 TEST_BIRDS_PATH <- paste(BASE, "Test Birds Location.csv",     sep="")
-IMAGE_PATH      <- paste(BASE, "Lekagul Roadways 2018Q.png",   sep="")
+IMAGE_PATH      <- paste(BASE, "Lekagul Roadways 2018.png",   sep="")
 STATS_PATH      <- paste(BASE, "metadata\\stats_xy.csv", sep="")
 
 X_MAX <- 200
 Y_MAX <- 200
-DUMP  <- c(x=100, y=100)
-#DUMP  <- c(x=148, y=159) #Location of alleged dump site.
+#DUMP  <- c(x=100, y=100)
+DUMP  <- c(x=148, y=159) #Location of alleged dump site.
 ALL_QUALITIES  <- c("A", "B", "C", "D", "E", "no score")
 QUALITY_COLORS <- c("Purple", "Blue", "Green", "Yellow", "Orange", "Black")
 names(QUALITY_COLORS) <- ALL_QUALITIES
@@ -47,7 +47,7 @@ VOCALIZATION_COLORS <- c(
   "purple", "orange", "blue", "green", "black", "red"
 )
 QUADRANT_COLORS <- c(
-  "red", "blue", "yellow", "green"
+  "red", "blue", "blue", "red"
 )
 names(QUADRANT_COLORS) = c("1", "2", "3", "4")
 names(VOCALIZATION_COLORS) <- ALL_VOCALIZATIONS
@@ -100,7 +100,7 @@ generate_maps <- function(out_dir)
   for(year in 1983:2018)
   {
     filtered <- dtable[dtable$Year %in% year,]
-    colors   <- SPECIES_COLORS[filtered[["English_name"]]]
+    colors   <- QUADRANT_COLORS[filtered[["Quadrant"]]]
     out_file <- paste(out_dir, "AllBirds_", year, ".png", sep="")
 
     png(out_file)
@@ -131,8 +131,8 @@ generate_histograms <- function(dtable, column, collection, filter, breaks, ylim
   }
 }
 
-
-plot_xy(dtable, "All Species Colored by Quadrant", QUADRANT_COLORS[dtable[["Quadrant"]]])
+generate_maps(paste(BASE, "map_year_loc\\", sep=""))
+#plot_xy(dtable, "All Species Colored by Quadrant", QUADRANT_COLORS[dtable[["Quadrant"]]])
 #plot_xy(dtable, "All Species Colored by Recording Quality", QUALITY_COLORS[dtable[["Quality"]]])
 #plot_xy(dtable, "All Species Colored by Call Type", VOCALIZATION_COLORS[dtable[["Vocalization_type"]]])
 #Generate histogram of all data
@@ -159,7 +159,7 @@ filter2 <- function(dtable, specie)
 #hist(dtable[["Hour"]], breaks=0:24, right=FALSE, col="lightblue", xlab="Hour", main="Histogram of Hour")
 
 #Generate histogram of all species based on filter.
-#generate_histograms(dtable, "Year", ALL_SPECIES, filter1, 1983:2017, c(0,60), paste(BASE, "histograms\\", sep=""))
+#generate_histograms(dtable, "Year", ALL_SPECIES, filter1, 1983:2017, c(0,60), paste(BASE, "hist_year_loc\\", sep=""))
 #generate_histograms(dtable, "Hour", ALL_SPECIES, filter2, 0:24, c(0,100), paste(BASE, "histograms3\\", sep=""))
 
 #Generate histogramm of the vocalization types
@@ -175,24 +175,29 @@ filter2 <- function(dtable, specie)
 #hist3D(z=frequency, ybreaks=seq(0,23,l=25), xbreaks=seq(1983, 2018, l=36), border="Black", main="Histogram of Hour of Day", xlab="Year", ylab="Hour", zlab="Frequency")
 #image2D(z=frequency, border="Black", main="Histogram of Hour of Day", xlab="Year", ylab="Hour")
 
+#year     <- as.numeric(dtable[["Year"]])
+#frequency <- table(as.numeric(dtable[["Year"]]), as.numeric(dtable[["Quadrant"]]))
+#image2D(z=frequency, border="Black", main="Histogram of Quadrant", xlab="Year", ylab="Quadrant")
+#hist3D(z=frequency, ybreaks=seq(0,23,l=25), xbreaks=seq(1983, 2018, l=36), border="Black", main="Histogram of Hour of Day", xlab="Year", ylab="Hour", zlab="Frequency")
+
 #freq_month_bird <- table(dtable[["Vocalization_type"]], dtable[["Year"]])
 #write.csv(freq_month_bird, paste(BASE, "metadata\\freq_vocal_bird.csv", sep="")) 
 
-mean_x <- numeric()
-mean_y <- numeric()
-sd_x   <- numeric()
-sd_y   <- numeric()
+#mean_x <- numeric()
+#mean_y <- numeric()
+#sd_x   <- numeric()
+#sd_y   <- numeric()
 
-for(year in 1983:2018)
-{
-  x = as.numeric(dtable[as.numeric(dtable[["Year"]]) == year,][["X"]])
-  y = as.numeric(dtable[as.numeric(dtable[["Year"]]) == year,][["Y"]])
+#for(year in 1983:2018)
+#{
+#  x = as.numeric(dtable[as.numeric(dtable[["Year"]]) == year,][["X"]])
+#  y = as.numeric(dtable[as.numeric(dtable[["Year"]]) == year,][["Y"]])
   
-  mean_x <- c(mean_x, mean(x))
-  mean_y <- c(mean_y, mean(y))
-  sd_x   <- c(sd_x,   sd(x))
-  sd_y   <- c(sd_y,   sd(y))
-}
+#  mean_x <- c(mean_x, mean(x))
+#  mean_y <- c(mean_y, mean(y))
+#  sd_x   <- c(sd_x,   sd(x))
+#  sd_y   <- c(sd_y,   sd(y))
+#}
 
 #stats_xy <- data.frame(list(year=1983:2018, meanx=mean_x, meany=mean_y, sdx=sd_x, sdy=sd_y))
 #write.csv(stats_xy, paste(BASE, "metadata\\stats_xy.csv", sep=""))
