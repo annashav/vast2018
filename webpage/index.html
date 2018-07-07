@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xml:lang="en" lang="en">
+<head>
+	<title>CSUS | Vast Challenge 2018</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$(".btn").click(function(){
+				$("#page1").fadeOut(1000);
+				$("#welcome").delay(1000).fadeIn(1000);
+			});
+			$("#btn1").click(function(){
+					$("#resident").delay(2000).fadeIn(1000);
+					$("#page3").delay(3000).fadeIn(1000);
+			});
+			$("#btn2").click(function(){
+					$("#visitor").delay(2000).fadeIn(1000);
+					$("#page3").delay(3000).fadeIn(1000);
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="layer">
+	<br><br><br><br><br><br><br><br>
+  <div id="page1">
+	  <center><h2>Are you a resident or visitor to Mistford?</h2></center><br>
+		<center>
+			<a class="btn" id="btn1">Resident</a>
+			<a class="btn" id="btn2">Visitor</a>
+		</center>
+	</div>
+	<div id="welcome">
+		<center><h1>Welcome!</h1></center>
+	</div>
+	<div id="resident">
+		<p>We live in a unique town next to Boonsong Lekagul Nature Preserve. Other highlights of our town include the industrial giant, Kasios, and Mistford College.</p>
+  </div>
+	<div id="visitor">
+		<p>Welcome to Mistford! We hope that you enjoy your stay. Here in our unique town, one of our most popular and nearest attractions is the Boonsong Lekagul Nature Preserve. Other highlights of our humble town is our industrial giant, Kasios, and Mistford College.</p>
+	</div>
+	<div id="page3">
+		<center>
+		  <h2>Have you visited Boonsong Lekagul Nature Preserve before?</h2>
+			<a class="btn" id="btn3">Yes</a>
+		  <a class="btn" id="btn4">No</a>
+	  </center>
+  </div>
+  </div>
+</body>
+</html>

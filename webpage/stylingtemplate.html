@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+	#bodys{
+		background: #D0E4F5 url("https://cdn.pixabay.com/photo/2017/01/15/09/53/texture-1981129_960_720.jpg") repeat local 50% 0%;
+		font-family: Verdana, Geneva, sans-serif;
+		font-size: 14px;
+		letter-spacing: 2.6px;
+		word-spacing: 1.2px;
+		color: #FFFFFF;
+		font-weight: 40;
+		text-decoration: none solid rgb(68, 68, 68);
+		font-style: normal;
+		font-variant: normal;
+		text-transform: none;
+	}
+	#head1{
+		border: 38px solid rgba(161, 107, 58, 0.63);
+		font-family:verdana;
+		text-shadow: 3px 3px 7px #A4918A;
+		text-align: center;
+	}
+	#myp{
+		border: 28px solid rgba(23, 61, 14, 0.51);
+		-webkit-column-count: 2;
+		-moz-column-count: 2;
+		column-count: 2;
+		-webkit-column-gap: 40px;
+		-moz-column-gap: 40px;
+		column-gap: 40px;
+		-moz-column-rule: 1px solid rgba(130, 192, 114, 1);
+		column-rule: 1px solid rgba(130, 192, 114, 1);
+	}
+	.container {
+ 		position:relative;
+  		width: 50%;
+	}
+	.image {
+		border-radius: 8px;
+  		display: block;
+  		width: 100%;
+  		height: auto;
+	}
+	.overlay {
+  		position: absolute;
+  		top: 0;
+  		bottom: 0;
+  		left: 0;
+  		right: 0;
+  		height: 100%;
+  		width: 100%;
+  		opacity: 0;
+  		transition: .5s ease;
+  		background-color: #70552b;
+	}
+	.overlay2 {
+		position: absolute;
+		top: 0; bottom: 0; left: 0; right: 0;
+		height: 100%; width:100%;
+		opacity: 0;
+		transition: .5s ease;
+		background-color: #70552b;
+	}
+	.container:hover .overlay {
+ 		 opacity: 0.75;
+	}
+	.container:hover .overlay2 {
+ 		 opacity: 0.75;
+	}
+	.text{
+		font-family: Verdana, Geneva, sans-serif;
+		color: white;
+  		font-size: 15px;
+  		position: absolute;
+  		top: 50%;
+  		left: 50%;
+  		transform: translate(-50%, -50%);
+  		-ms-transform: translate(-50%, -50%);
+	}
+
+</style>
+<head>
+	<title>VAST Design Styling</title>
+</head>
+<body id="bodys">
+	<h1 id="head1"> VAST DESIGN STYLING SAMPLE</h1>
+	<p id="myp">Lorem ipsum dolor sit amet, nonumes voluptatum mel ea, cu case ceteros cum. Novum commodo malorum vix ut. Dolores consequuntur in ius, sale electram dissentiunt quo te. Cu duo omnes invidunt, eos eu mucius fabellas. Stet facilis ius te, quando voluptatibus eos in. Ad vix mundi alterum, integre urbanitas intellegam vix in.</p>
+	<div class="container">
+    <img src="https://pixnio.com/free-images/fauna-animals/birds/belted-kingfisher-bird-juvenile-female-725x487.jpg" class="image">
+    <div class="overlay2">
+      <div class="text">Our pride and joy, the rose-crested blue pipit!</div>
+  	</div>
+	</div>
+	<div class="container">
+ 		 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/28/Triangle_Lake_Bog_State_Nature_Preserve_-_Panorama_of_Triangle_Lake%2C_Aug_2013.jpg/720px-Triangle_Lake_Bog_State_Nature_Preserve_-_Panorama_of_Triangle_Lake%2C_Aug_2013.jpg">
+  			<div class="overlay">
+    			<div class="text">Our beautiful Lekagul Nature Preserve</div>
+  			</div>
+		</div>
+
+</body>
+</html>
