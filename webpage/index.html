@@ -7,9 +7,6 @@
 	<script>
 	  speed = 1000;
 		$(document).ready(function(){
-			$(".btn").click(function(){
-
-			});
 			$("#btn1").click(function() {
 				$("#page1").fadeOut(speed);
 				$("#welcome").delay(speed).fadeIn(speed);
@@ -24,8 +21,20 @@
 			});
 			$("#btn3").click(function() {
 				$("#page2").fadeOut(speed);
-				$("#question3").delay(speed).fadeIn(speed);
-			})
+				$("#question3yes").delay(speed).fadeIn(speed);
+			});
+			$("#btn4").click(function() {
+				$("#page2").fadeOut(speed);
+				$("#question3no").delay(speed).fadeIn(speed);
+			});
+			$("#btn5").click(function() {
+				$("#page3").fadeOut(speed);
+				$("#question4yes").delay(speed).fadeIn(speed);
+			});
+			$(".submit").click(function() {
+				$("#page3").fadeOut(speed);
+				$("#page4").fadeOut(speed);
+			});
 		});
 	</script>
 </head>
@@ -51,19 +60,45 @@
 			</div>
       <div id="question2">
 				<center>
-				  <h2>Have you visited Boonsong Lekagul Nature Preserve before?</h2>
+				  <h2>Have you visited Boonsong Lekagul Nature Preserve before?</h2><br>
 					<a class="btn" id="btn3">Yes</a>
 					<a class="btn" id="btn4">No</a>
 				</center>
 		  </div>
 	  </div>
 		<div id="page3">
-			<div id="question3">
+			<div id="question3yes">
 				<center>
 					<h2>When was the last time you visited?</h2>
 					<input class="input" type="date" min="1980-12-31" max="2018-7-7">
-					<a id="submit" class="btn">Submit</a>
+					<h2>What was your reason for visiting?</h2>
+					<select class="input">
+					  <option value="sightseeing">Sightseeing</option>
+					  <option value="animals">Seeing the animals</option>
+					  <option value="other">Other</option>
+					</select><br><br><br>
+					<a class="btn submit">Next</a></h2>
 				</center>
+			</div>
+			<div id="question3no">
+			  <center>
+					<h2>Would you ever visit the preserve?</h2><br>
+					<a class="btn" id="btn5">Yes</a>
+					<a class="btn submit" id="btn6">No</a>
+				</center>
+			</div>
+		</div>
+		<div id="page4">
+			<div id="question4yes">
+				<center>
+					<h2>What is your main reason for wanting to visit the preserve?</h2>
+					<select class="input">
+						<option value="sightseeing">Sightseeing</option>
+						<option value="animals">Seeing the animals</option>
+						<option value="other">Other</option>
+					</select><br><br><br>
+					<a class="btn submit">Next</a></h2>
+			  </center>
 			</div>
 		</div>
   </div>
